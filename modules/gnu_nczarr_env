@@ -12,7 +12,7 @@ proc ModulesHelp { } {
     puts stderr "\t\tCC"
     puts stderr "\t\tHDF5DIR"
     puts stderr "\t\tHDF5_PLUGIN_PATH"
-    puts stderr "\t\tNFDIR"
+    puts stderr "\t\tNCDIR"
     puts stderr ""
     puts stderr "\tThe following modules are loaded:"
     puts stderr "\t\tcomp/gcc/11.2.0"
@@ -33,7 +33,7 @@ module load git/2.24.0
 
 
 set   def_hdf5dir             /discover/nobackup/projects/lis/libs/sles-12.3/hdf5/1.12.1_gnu-11.2.0
-set   def_nfdir               /discover/nobackup/bmcandr1/local/netcdf-master
+set   def_ncdir               /discover/nobackup/bmcandr1/local/netcdf-master
 set   def_hdf5_plugin_path    /discover/nobackup/bmcandr1/local/netcdf-master/plugins
 
 setenv   DEV_ENV           GNU_NCZARR_ENV
@@ -42,7 +42,7 @@ setenv   FC                gfortran
 setenv   CC                gcc
 setenv   HDF5DIR           $def_hdf5dir
 setenv   HDF5_PLUGIN_PATH  $def_hdf5_plugin_path
-setenv   NFDIR             $def_nfdir
+setenv   NCDIR             $def_ncdir
 
 prepend-path   LD_LIBRARY_PATH   "$def_hdf5dir/lib"
-prepend-path   LD_LIBRARY_PATH   "$def_nfdir/lib64"
+prepend-path   LD_LIBRARY_PATH   "$def_ncdir/lib64"
