@@ -59,6 +59,8 @@ Run `make` to decompress the input files and compile the executables (`simple_xy
 
 A netCDF file (`simple_xy.nc`) and a Zarr store (`simple_xy_xarray.zarr`) should be present in the `inputs/` directory.
 
+Note: the `simple_xy_zarr_rd.*` source code files contained in this repository are based on `simple_xy_rd.c` and `simple_xy_rd.f90` from [the netCDF website](https://www.unidata.ucar.edu/software/netcdf/examples/programs/). The `FILE_NAME` variable has simply been modified to point to a local Zarr store using the URL format `file://simple_xy_xarray.zarr#mode=zarr,file` as described [here](https://www.unidata.ucar.edu/blogs/developer/en/entry/overview-of-zarr-support-in).
+
 ## Run the Executables
 
 For example:
