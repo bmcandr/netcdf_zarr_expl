@@ -1,0 +1,47 @@
+#%Module1.0###################################################################
+
+proc ModulesHelp { } {
+    puts stderr "\t[module-info name] - loads the LISF_7_GNU_11_2_0_IMPI_2021_4_0 env"
+    puts stderr ""
+    puts stderr "This is for use on NCCS' discover system running SLES 12.3."
+    puts stderr ""
+    puts stderr "\tThe following env variables are set:"
+    puts stderr "\t\tDEV_ENV"
+    puts stderr "\t\tARCH"
+    puts stderr "\t\tFC"
+    puts stderr "\t\tCC"
+    puts stderr "\t\tHDF5DIR"
+    puts stderr "\t\tHDF5_PLUGIN_PATH"
+    puts stderr "\t\tNFDIR"
+    puts stderr ""
+    puts stderr "\tThe following modules are loaded:"
+    puts stderr "\t\tcomp/gcc/11.2.0"
+    puts stderr ""
+}
+
+
+module-whatis	"loads the [module-info name] environment"
+
+
+set modname     [module-info name]
+set modmode     [module-info mode]
+
+
+module load comp/gcc/11.2.0
+module load git/2.24.0
+
+
+set   def_hdf5dir             /discover/nobackup/projects/lis/libs/sles-12.3/hdf5/1.12.1_gnu-11.2.0
+set   def_nfdir               /discover/nobackup/bmcandr1/local/netcdf-master
+set   def_hdf5_plugin_path    /discover/nobackup/bmcandr1/local/netcdf-master/plugins
+
+setenv   DEV_ENV           GNU_NCZARR_ENV
+setenv   ARCH              linux_gfortran
+setenv   FC                gfortran
+setenv   CC                gcc
+setenv   HDF5DIR           $def_hdf5dir
+setenv   HDF5_PLUGIN_PATH  $def_hdf5_plugin_path
+setenv   NFDIR             $def_nfdir
+
+prepend-path   LD_LIBRARY_PATH   "$def_hdf5dir/lib"
+prepend-path   LD_LIBRARY_PATH   "$def_nfdir/lib64"
