@@ -28,6 +28,7 @@ set modmode     [module-info mode]
 
 
 module load comp/gcc/11.2.0
+module load cmake
 module load git/2.24.0
 
 
