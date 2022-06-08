@@ -2,11 +2,50 @@
 
 This repository provides a demonstration of reading Zarr compressed with Blosc+LZ4 in Fortran 90 and C.
 
-## Installation of Dependencies
+## Install Dependencies
 
-1. Install [c-blosc](https://github.com/Blosc/c-blosc)
-2. Install HDF5 with Fortran enabled (or point to existing installation)
-3. Install netCDF-C
+1. Install [AWS SDK CPP](https://github.com/aws/aws-sdk-cpp)
+
+    **TODO:** investigate dependency requirements. Installing AWS SDK CPP goes fine, but installing NetCDF with AWS SDK support throws error related to missing dependency:
+    
+    ```
+    CMake Error at /gpfsm/dulocal/sles12/other/cmake/3.23.1/share/cmake-3.23/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  Could NOT find crypto (missing: crypto_LIBRARY)
+    ```
+    
+    Links:
+    
+    * https://github.com/aws/aws-sdk-cpp/issues/1910
+    * https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/setup-linux.html
+   
+   1. Clone the master branch from GitHub and recurse all submodules:
+      `git clone --recurse-submodules git@github.com:aws/aws-sdk-cpp`
+      
+   2. Change into the repo directory, create a build directory, and change into it:
+       
+       ```
+       $ cd aws-sdk-cpp
+       $ mkdir build
+       $ cd build
+       ```
+      
+   3. Run `cmake` and with the following options ([see here for guidance from NetCDF developers](https://github.com/Unidata/netcdf-c/blob/main/docs/nczarr.md#nix-build)):
+   
+       ```
+       $ cmake .. -DCMAKE_INSTALL_PREFIX=${PREFIX} -DBUILD_ONLY="s3" -DCMAKE_MODULE_PATH=${PREFIX}/lib/cmake -DCMAKE_POLICY_DEFAULT_CMP0075=NEW -DENABLE_UNITY_BUILD=ON -DENABLE_TESTING=OFF -DSIMPLE_INSTALL=ON -DCMAKE_INSTALL_LIBDIR=lib
+       ```
+       
+   4. Remove `-Werror` flags from several files named "flags.make". This flag treats all warnings as errors and causes the build to fail on Discover (and, likely, other systems).
+   
+       ```
+       for FILE in $(find . -type f -name flags.make -exec grep -Hl "Werror" {} \;); do sed -i 's/-Werror//g' $FILE; done
+       ```
+   
+   5. Run `make` and then `make install`.
+   
+2. Install [c-blosc](https://github.com/Blosc/c-blosc)
+3. Install HDF5 with Fortran enabled (or point to existing installation)
+4. Install netCDF-C
     1. Clone the latest master branch and checkout commit [`526552034`](https://github.com/Unidata/netcdf-c/commit/526552034cbd9bbcc013994494a50c9e19a32c21):
         
         ```
@@ -25,7 +64,7 @@ This repository provides a demonstration of reading Zarr compressed with Blosc+L
      5. Install with `make install`
      6. Copy the `plugins/` directory into the netCDF install directory.
 
-4. Install netCDF-Fortran into same install directory as netCDF-C
+5. Install netCDF-Fortran into same install directory as netCDF-C
 
 ## Set Environment Variables
 
