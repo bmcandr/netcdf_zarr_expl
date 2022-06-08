@@ -10,7 +10,7 @@ This repository provides a demonstration of reading Zarr compressed with Blosc+L
     
     ```
     CMake Error at /gpfsm/dulocal/sles12/other/cmake/3.23.1/share/cmake-3.23/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
-  Could NOT find crypto (missing: crypto_LIBRARY)
+    Could NOT find crypto (missing: crypto_LIBRARY)
     ```
     
     Links:
