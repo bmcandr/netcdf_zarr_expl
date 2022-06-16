@@ -1,6 +1,32 @@
-# netcdf_zarr_expl
+# Exploring Support for Zarr and S3 in NetCDF Library
 
-This repository provides a demonstration of reading Zarr compressed with Blosc+LZ4 in Fortran 90 and C.
+This repository provides a demonstration of reading Zarr compressed with Blosc+LZ4 in Fortran 90 and C. It also attempted to demonstrate support for reading data from S3 buckets.
+
+## Docker
+
+The Dockerfile in this repository captures the build process for successfully building the NetCDF C and Fortran libraries with support for (1) reading Zarr stores that have been compressed with Blosc+subcompressor (e.g., LZ4) and (2) integration with the AWS SDK for C++ (specifically the SDK for accessing S3 buckets).
+
+To build:
+
+```
+% docker build -t netcdf_zarr .
+```
+
+To run:
+
+```
+% docker run -it netcdf_zarr /bin/bash
+```
+
+Then run the demo programs:
+
+```
+./simple_xy_zarr_rd_c
+
+...
+
+./simple_xy_zarr_rd_fortran
+```
 
 ## Install Dependencies
 
