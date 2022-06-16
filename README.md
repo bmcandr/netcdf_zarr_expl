@@ -53,16 +53,17 @@ This repository provides a demonstration of reading Zarr compressed with Blosc+L
         $ cd netcdf-c
         $ git checkout 526552034cbd9bbcc013994494a50c9e19a32c21
         ```
-     2. Create directory named `build/` and move into it.
-     3. Run cmake with the following command (replace `path/to/<dir>` with relevant paths):
+     2. Run `sed -i 's/\!MSVC/NOT MSVC/' CMakeLists.txt` (fixes an bug that prevents CMake from finding Blosc libraries).
+     3. Create directory named `build/` and move into it.
+     4. Run cmake with the following command (replace `path/to/<dir>` with relevant paths):
         
         ```
         $ cmake .. -DCMAKE_PREFIX_PATH=path/to/hdf5 -DCMAKE_INSTALL_PREFIX=path/to/install/dir -DENABLE_BLOSC=ON -DBlosc_ROOT=path/to/blosc -DHDF5_LIBRARIES=path/to/hdf5/lib -DENABLE_FILTER_TESTING=ON
         ```
 
-     4. Build with `cmake --build .`
-     5. Install with `make install`
-     6. Copy the `plugins/` directory into the netCDF install directory.
+     5. Build with `cmake --build .`
+     6. Install with `make install`
+     7. Copy the `plugins/` directory into the netCDF install directory.
 
 5. Install netCDF-Fortran into same install directory as netCDF-C
 

@@ -22,6 +22,7 @@
 #include <hdf5.h>
 
 /* This is the name of the data file we will read. */
+// #define FILE_NAME "inputs/simple_xy.nc"
 #define FILE_NAME "file://inputs/simple_xy_xarray.zarr#mode=zarr,file"
 
 /* We are reading 2D data, a 6 x 12 grid. */
@@ -31,10 +32,13 @@
 /* Handle errors by printing an error message and exiting with a
  * non-zero status. */
 #define ERRCODE 2
-#define ERR(e) {printf("Error: %s\n", nc_strerror(e)); exit(ERRCODE);}
+#define ERR(e)                               \
+   {                                         \
+      printf("Error: %s\n", nc_strerror(e)); \
+      exit(ERRCODE);                         \
+   }
 
-int
-main()
+int main()
 {
    /* This will be the netCDF ID for the file and data variable. */
    int ncid, varid;
@@ -51,23 +55,23 @@ main()
    if ((retval = nc_open(FILE_NAME, NC_NOWRITE, &ncid)))
       ERR(retval);
 
-    printf("opened...\n");
+   printf("opened...\n");
    /* Get the varid of the data variable, based on its name. */
    if ((retval = nc_inq_varid(ncid, "data", &varid)))
       // printf("error here?\n");
       ERR(retval);
-   
+
    /* Read the data. */
    if ((retval = nc_get_var_int(ncid, varid, &data_in[0][0])))
       ERR(retval);
 
-    printf("read data...\n");
+   printf("read data...\n");
    /* Check the data. */
    for (x = 0; x < NX; x++)
       for (y = 0; y < NY; y++)
-        printf("data(%d, %d): %d\n", x, y, data_in[x][y]);
+         printf("data(%d, %d): %d\n", x, y, data_in[x][y]);
 
-    printf("checked data...\n");
+   printf("checked data...\n");
    /* Close the file, freeing all resources. */
    if ((retval = nc_close(ncid)))
       ERR(retval);
